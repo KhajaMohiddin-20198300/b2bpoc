@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved. -->
+<items xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="items.xsd">
+
+	<collectiontypes>
+		<collectiontype code="GenderList" elementtype="Gender" autocreate="true" generate="true" type="list" />
+		<collectiontype code="SwatchColorSet" elementtype="SwatchColorEnum" autocreate="true" generate="true" type="set" />
+		<collectiontype code="CustomOfferLinksList" elementtype="CMSLinkComponent" autocreate="true" generate="true" type="list" />
+	</collectiontypes>
+
+	<enumtypes>
+		<enumtype generate="true" code="SwatchColorEnum" autocreate="true" dynamic="true">
+			<value code="BLACK" />
+			<value code="BLUE" />
+			<value code="BROWN" />
+			<value code="GREEN" />
+			<value code="GREY" />
+			<value code="ORANGE" />
+			<value code="PINK" />
+			<value code="PURPLE" />
+			<value code="RED" />
+			<value code="SILVER" />
+			<value code="WHITE" />
+			<value code="YELLOW" />
+		</enumtype>
+	</enumtypes>
+
+	<itemtypes>
+
+		<!-- Add your item definitions here -->
+
+
+		<!-- TypeGroups are for structure of this file only -->
+
+		<typegroup name="Apparel">
+			<itemtype code="ApparelProduct" extends="Product" autocreate="true" generate="true"
+				jaloclass="com.hybris.applecommerce.core.jalo.ApparelProduct">
+				<description>Base apparel product extension that contains additional attributes.</description>
+				<attributes>
+					<attribute qualifier="genders" type="GenderList">
+						<description>List of genders that the ApparelProduct is designed for</description>
+						<modifiers />
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="ApparelStyleVariantProduct" extends="VariantProduct" autocreate="true" generate="true"
+				jaloclass="com.hybris.applecommerce.core.jalo.ApparelStyleVariantProduct">
+				<description>Apparel style variant type that contains additional attribute describing variant style.
+                </description>
+				<attributes>
+					<attribute qualifier="style" type="localized:java.lang.String" metatype="VariantAttributeDescriptor">
+						<description>Color/Pattern of the product.</description>
+						<modifiers />
+						<persistence type="property" />
+					</attribute>
+
+					<attribute qualifier="swatchColors" type="SwatchColorSet">
+						<description>A normalized color mapping to a standardized front-end navigable name.
+                        </description>
+						<modifiers />
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+
+			</itemtype>
+
+			<itemtype code="ApparelSizeVariantProduct" extends="ApparelStyleVariantProduct" autocreate="true"
+				generate="true"
+				jaloclass="com.hybris.applecommerce.core.jalo.ApparelSizeVariantProduct">
+				<description>Apparel size variant type that contains additional attribute describing variant size.
+                </description>
+				<attributes>
+					<attribute qualifier="size"
+						type="localized:java.lang.String"
+						metatype="VariantAttributeDescriptor">
+						<description>Size of the product.</description>
+						<modifiers />
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+		</typegroup>
+
+		<typegroup name="Electronics">
+			<itemtype code="ElectronicsColorVariantProduct" extends="VariantProduct" autocreate="true" generate="true"
+				jaloclass="com.hybris.applecommerce.core.jalo.ElectronicsColorVariantProduct">
+				<description>Electronics color variant type that contains additional attribute describing variant color.
+                </description>
+				<attributes>
+					<attribute qualifier="color"
+						type="localized:java.lang.String"
+						metatype="VariantAttributeDescriptor">
+						<description>Color of the product.</description>
+						<modifiers />
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+		</typegroup>
+
+		<!-- <itemtype generate="true" code="MyProduct" jaloclass="de.hybris.platform.powertoolsstore.jalo.MyProduct" 
+			extends="Product" autocreate="true" > 
+			<attributes> 
+			<attribute qualifier="myExampleInitialStringField" type="java.lang.String"> 
+			<description>My Example Initial String Value</description> 
+			<modifiers initial="true"/> 
+			<persistence type="property"/> 
+			</attribute> 
+			<attribute qualifier="myExampleBooleanField" type="java.lang.Boolean"> 
+			<description>Example Initial Boolean Field</description> 
+			<persistence type="property"/> 
+			</attribute> 
+			<attribute qualifier="media" type="Media"> 
+			<persistence type="property"/> 
+			</attribute> 
+			</attributes> 
+			</itemtype> -->
+
+		<typegroup name="Apple">
+
+			<itemtype code="ThirdPartyCredential" generate="true" autocreate="true">
+				<deployment table="ThirdPartyCredentials"
+					typecode="10100" />
+				<attributes>
+					<attribute qualifier="code" type="java.lang.String">
+						<modifiers optional="true" unique="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="username" type="java.lang.String">
+						<modifiers unique="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="password" type="java.lang.String">
+						<modifiers unique="true" encrypted="true" />
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="ElectronicProduct" extends="Product" generate="true" autocreate="true"
+				jaloclass="com.hybris.applecommerce.core.jalo.ElectronicProduct">
+				<description>Creating Custom Electronic Product which extends Product for Gender</description>
+				<attributes>
+					<attribute qualifier="genders" type="GenderList">
+						<modifiers optional="true" read="true" write="true"
+							search="true" />
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="Address" generate="false" autocreate="false">
+				<attributes>
+					<attribute qualifier="PermanentAddress"
+						type="java.lang.Boolean">
+						<description>PermanentAddress</description>
+						<defaultvalue>Boolean.FALSE</defaultvalue>
+						<modifiers read="true" write="true" search="true"
+							optional="false" initial="true" />
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="CustomOffersComponent" extends="SimpleCMSComponent" generate="true" autocreate="true"
+				jaloclass="com.hybris.applecommerce.core.jalo.CustomOffersComponent">
+				<description>Used to display apple offers on offerpage</description>
+				<attributes>
+					<attribute type="localized:java.lang.String"
+						qualifier="headrerText">
+						<modifiers read="true" write="true" optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="localized:java.lang.String"
+						qualifier="footerText">
+						<modifiers read="true" write="true" optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="Media" qualifier="offerImage">
+						<modifiers read="true" write="true" optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="CustomOfferLinksList"
+						qualifier="offerImageLink">
+						<persistence type="property" />
+						<description>List of CMS Link Component</description>
+						<modifiers read="true" write="true" />
+					</attribute>
+				</attributes>
+			</itemtype>
+
+
+
+			<itemtype code="YoutubeVideoComponent" extends="SimpleCMSComponent" generate="true" autocreate="true"
+				jaloclass="com.hybris.applecommerce.core.jalo.YoutubeVideoComponent">
+				<attributes>
+					<attribute qualifier="width" type="java.lang.Integer">
+						<modifiers />
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="height" type="java.lang.Integer">
+						<modifiers />
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="videoId" type="java.lang.String">
+						<modifiers />
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="autoPlay" type="java.lang.Boolean">
+						<description>To continuously autoplay youtube videos</description>
+						<defaultvalue>Boolean.TRUE</defaultvalue>
+						<modifiers />
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="showControls"
+						type="java.lang.Boolean">
+						<description>To show youtube video controls</description>
+						<defaultvalue>Boolean.TRUE</defaultvalue>
+						<modifiers />
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+
+
+			<itemtype code="VideoComponent" extends="SimpleCMSComponent" generate="true" autocreate="true"
+				jaloclass="com.hybris.applecommerce.core.jalo.VideoComponent">
+				<attributes>
+					<attribute qualifier="videoID" type="java.lang.String">
+						<modifiers />
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="video" type="Media">
+						<modifiers />
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+			
+			<itemtype code="Student" extends="GenericItem" autocreate="true" generate="true"
+				jaloclass="com.hybris.applecommerce.jalo.Student">
+				<description>Student Table</description>
+				<deployment table="Students" typecode="10200" />
+					<attributes>
+						<attribute qualifier="id" type="java.lang.String">
+							<modifiers optional="false" read="true" write="true" search="true" />
+							<persistence type="property" />
+						</attribute>
+						<attribute qualifier="name" type="localized:java.lang.String">
+							<modifiers optional="true" read="true" write="true" search="true" />
+							<persistence type="property" />
+						</attribute>
+						<attribute qualifier="age" type="java.lang.Integer">
+							<modifiers optional="true" read="true" write="true" search="true" />
+							<persistence type="property" />
+						</attribute>						
+					</attributes>
+			</itemtype>			
+
+		</typegroup>
+
+	</itemtypes>
+</items>

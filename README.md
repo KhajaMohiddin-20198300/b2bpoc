@@ -1,2 +1,2 @@
-# b2bpoc
-b2bpoc
+# POC-B2B
+POC-B2B
